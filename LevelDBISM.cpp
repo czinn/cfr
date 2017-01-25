@@ -42,6 +42,6 @@ void LevelDBISM::saveInformationSet(InformationSet *is) {
   std::string value((char*)data, actions * 2 * sizeof(double));
   leveldb::Status s = db->Put(leveldb::WriteOptions(), is->id, value);
   assert(s.ok());
-
+  delete data;
   delete is; // kind of bad?
 }

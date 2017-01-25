@@ -9,10 +9,16 @@ double cfr(InformationSetManager *m, Game *g, double p0, double p1) {
   int player = g->currentPlayer();
 
   int numActions = g->numActions();
-  InformationSet *is = m->getInformationSet(g->getInformationSetId(), numActions);
-
-  double *strategy = is->getStrategy();
-  is->updateStrategySum(player == 0 ? p0 : p1, strategy);
+  double *strategy;
+  InformationSet *is = NULL;
+  if (numActions > 1) {
+    is = m->getInformationSet(g->getInformationSetId(), numActions);
+    strategy = is->getStrategy();
+    is->updateStrategySum(player == 0 ? p0 : p1, strategy);
+  } else {
+    strategy = new double[numActions];
+    strategy[0] = 1.0;
+  }
 
   double *util = new double[numActions];
   double nodeUtil = 0;
@@ -27,12 +33,17 @@ double cfr(InformationSetManager *m, Game *g, double p0, double p1) {
     delete ng;
   }
 
-  for (int i = 0; i < numActions; i++) {
-    double regret = util[i] - nodeUtil;
-    is->regretSum[i] += (player == 0 ? p1 : p0) * regret;
+  if (numActions > 1) {
+    for (int i = 0; i < numActions; i++) {
+      double regret = util[i] - nodeUtil;
+      is->regretSum[i] += (player == 0 ? p1 : p0) * regret;
+    }
+
+    m->saveInformationSet(is);
   }
 
-  m->saveInformationSet(is);
+  delete strategy;
+  delete util;
 
   return nodeUtil;
 }
