@@ -1,14 +1,16 @@
+#include <chrono>
 #include <iostream>
 #include <random>
 
 #include "KuhnGame.h"
-#include "MemoryISM.h"
+#include "LevelDBISM.h"
 #include "cfr.h"
 
 void train(int iterations) {
-  std::mt19937 mt;
+  unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+  std::mt19937 mt(seed);
   double util = 0;
-  MemoryISM *m = new MemoryISM;
+  LevelDBISM *m = new LevelDBISM("kuhn.db");
   for (int i = 0; i < iterations; i++) {
     KuhnGame *g = new KuhnGame(mt());
     util += cfr(m, g, 1, 1);
@@ -16,11 +18,15 @@ void train(int iterations) {
   }
 
   std::cout << "Average game value: " << util / iterations << std::endl;
-  m->printNodes();
+  for (int i = 1; i <= 9; i++) {
+    InformationSet *is = m->getInformationSet(std::string(1, '0' + i), 2);
+    is->printAverageStrategy();
+    delete is;
+  }
 
   delete m;
 }
 
 int main() {
-  train(10000000);
+  train(100000);
 }
