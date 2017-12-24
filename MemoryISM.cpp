@@ -2,6 +2,8 @@
 
 #include "MemoryISM.h"
 
+namespace cfr {
+
 MemoryISM::MemoryISM() {}
 
 MemoryISM::~MemoryISM() {
@@ -26,4 +28,6 @@ void MemoryISM::printNodes() const {
   for (auto it = map.begin(); it != map.end(); it++) {
     it->second->printAverageStrategy();
   }
+}
+
 }

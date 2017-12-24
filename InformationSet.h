@@ -3,6 +3,8 @@
 
 #include <string>
 
+namespace cfr {
+
 class InformationSet {
 public:
   InformationSet(int actions);
@@ -21,5 +23,6 @@ public:
   double *strategySum;
 };
 
+}
 
 #endif

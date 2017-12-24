@@ -3,7 +3,10 @@
 
 #define CARDS 9
 
-#include "Game.h"
+#include "../Game.h"
+
+namespace cfr {
+namespace kuhn {
 
 class KuhnGame : public Game {
 public:
@@ -25,5 +28,8 @@ private:
   std::string history;
   int current;
 };
+
+}
+}
 
 #endif

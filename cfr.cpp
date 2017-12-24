@@ -1,6 +1,8 @@
 #include "cfr.h"
 #include "InformationSet.h"
 
+namespace cfr {
+
 double cfr(InformationSetManager *m, Game *g, double p0, double p1) {
   if (g->isTerminal()) {
     return g->utility();
@@ -46,4 +48,6 @@ double cfr(InformationSetManager *m, Game *g, double p0, double p1) {
   delete util;
 
   return nodeUtil;
+}
+
 }

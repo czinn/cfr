@@ -2,6 +2,8 @@
 
 #include "InformationSet.h"
 
+namespace cfr {
+
 InformationSet::InformationSet(int actions) : actions(actions) {
   regretSum = new double[actions];
   strategySum = new double[actions];
@@ -48,7 +50,6 @@ double *InformationSet::getAverageStrategy() const {
 void InformationSet::printAverageStrategy() const {
   double *avgStrategy = getAverageStrategy();
 
-  std::cout << id << "\t: ";
   for (int i = 0; i < actions; i++) {
     if (i != 0) {
       std::cout << " , ";
@@ -67,4 +68,6 @@ void InformationSet::updateStrategySum(double realizationWeight, double *strateg
   for (int i = 0; i < actions; i++) {
     strategySum[i] += realizationWeight * strategy[i];
   }
+}
+
 }

@@ -3,6 +3,8 @@
 
 #include "InformationSet.h"
 
+namespace cfr {
+
 class InformationSetManager {
 public:
   InformationSetManager();
@@ -11,5 +13,7 @@ public:
   virtual InformationSet *getInformationSet(std::string id, int actions) = 0;
   virtual void saveInformationSet(InformationSet *) = 0;
 };
+
+}
 
 #endif

@@ -2,6 +2,8 @@
 
 #include "LevelDBISM.h"
 
+namespace cfr {
+
 LevelDBISM::LevelDBISM(std::string db_path) {
   options.create_if_missing = true;
   leveldb::Status s = leveldb::DB::Open(options, db_path, &db);
@@ -18,6 +20,9 @@ InformationSet *LevelDBISM::getInformationSet(std::string id, int actions) {
   InformationSet *is;
   if (s.ok()) {
     const char *v = value.c_str();
+    if (actions == 0) {
+      actions = value.size() / 16;
+    }
     double *regretSum = new double[actions];
     double *strategySum = new double[actions];
     for (int i = 0; i < actions; i++) {
@@ -44,4 +49,6 @@ void LevelDBISM::saveInformationSet(InformationSet *is) {
   assert(s.ok());
   delete data;
   delete is; // kind of bad?
+}
+
 }

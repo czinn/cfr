@@ -3,6 +3,8 @@
 
 #include <string>
 
+namespace cfr {
+
 class Game {
 public:
   Game(long seed);
@@ -18,5 +20,7 @@ public:
 
   virtual void makeAction(int action) = 0;
 };
+
+}
 
 #endif

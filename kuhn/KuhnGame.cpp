@@ -1,5 +1,8 @@
 #include "KuhnGame.h"
 
+namespace cfr {
+namespace kuhn {
+
 KuhnGame::KuhnGame(long seed) : Game(seed) {
   for (int i = 0; i < CARDS; i++) {
     cards[i] = i + 1;
@@ -71,4 +74,7 @@ int KuhnGame::numActions() const {
 void KuhnGame::makeAction(int action) {
   history += action == 0 ? "p" : "b";
   current = 1 - current;
+}
+
+}
 }

@@ -6,6 +6,8 @@
 #include "leveldb/db.h"
 #include "InformationSetManager.h"
 
+namespace cfr {
+
 class LevelDBISM : public InformationSetManager {
 public:
   LevelDBISM(std::string db_path);
@@ -18,5 +20,7 @@ private:
   leveldb::DB* db;
   leveldb::Options options;
 };
+
+}
 
 #endif

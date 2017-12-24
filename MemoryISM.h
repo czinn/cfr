@@ -4,6 +4,7 @@
 #include <map>
 #include "InformationSetManager.h"
 
+namespace cfr {
 
 class MemoryISM : public InformationSetManager {
 public:
@@ -18,5 +19,7 @@ public:
 private:
   std::map<std::string, InformationSet *> map;
 };
+
+}
 
 #endif
