@@ -1,4 +1,5 @@
 #include <cassert>
+#include <iostream>
 
 #include "LevelDBISM.h"
 
@@ -49,6 +50,17 @@ void LevelDBISM::saveInformationSet(InformationSet *is) {
   assert(s.ok());
   delete data;
   delete is; // kind of bad?
+}
+
+void LevelDBISM::listKeys() {
+  int count = 0;
+  leveldb::Iterator *it = db->NewIterator(leveldb::ReadOptions());
+  for (it->SeekToFirst(); it->Valid(); it->Next()) {
+    std::cout << it->key().ToString() << std::endl;
+    count++;
+  }
+  std::cout << "Number of states: " << count << std::endl;
+  delete it;
 }
 
 }
