@@ -18,7 +18,7 @@ void train(int iterations) {
     if (i % 100 == 0) {
       std::cout << i << std::endl;
     }
-    LoveLetterGame *g = new LoveLetterGame(mt());
+    LoveLetterGame *g = new LoveLetterGame(((long)(mt()) << sizeof(int)) | mt());
     util += dpcfr(m, g);
     delete g;
   }

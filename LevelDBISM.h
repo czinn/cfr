@@ -16,6 +16,7 @@ public:
   virtual InformationSet *getInformationSet(std::string id, int actions) override;
   virtual void saveInformationSet(InformationSet *) override;
   void listKeys();
+  void listSets();
 
 private:
   leveldb::DB* db;

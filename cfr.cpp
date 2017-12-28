@@ -151,8 +151,8 @@ double dpcfr(InformationSetManager *m, Game *g) {
       Game *ng = ig->clone();
       ng->makeAction(i);
       node nn = nodes[ng->getStateId()];
-      util[i] = nn.utility;
-      n.utility += nn.utility * strategy[i];
+      util[i] = -nn.utility;
+      n.utility += -nn.utility * strategy[i];
       delete ng;
     }
     nodes[ig->getStateId()] = n;

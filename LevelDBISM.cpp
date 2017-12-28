@@ -15,22 +15,26 @@ LevelDBISM::~LevelDBISM() {
   delete db;
 }
 
+InformationSet *decodeSet(std::string value, int actions) {
+  const char *v = value.c_str();
+  if (actions == 0) {
+    actions = value.size() / 16;
+  }
+  double *regretSum = new double[actions];
+  double *strategySum = new double[actions];
+  for (int i = 0; i < actions; i++) {
+    regretSum[i] = ((double*)v)[i];
+    strategySum[i] = ((double*)v)[i + actions];
+  }
+  return new InformationSet(actions, regretSum, strategySum);
+}
+
 InformationSet *LevelDBISM::getInformationSet(std::string id, int actions) {
   std::string value;
   leveldb::Status s = db->Get(leveldb::ReadOptions(), id, &value);
   InformationSet *is;
   if (s.ok()) {
-    const char *v = value.c_str();
-    if (actions == 0) {
-      actions = value.size() / 16;
-    }
-    double *regretSum = new double[actions];
-    double *strategySum = new double[actions];
-    for (int i = 0; i < actions; i++) {
-      regretSum[i] = ((double*)v)[i];
-      strategySum[i] = ((double*)v)[i + actions];
-    }
-    is = new InformationSet(actions, regretSum, strategySum);
+    is = decodeSet(value, actions);
   } else {
     is = new InformationSet(actions);
   }
@@ -57,6 +61,20 @@ void LevelDBISM::listKeys() {
   leveldb::Iterator *it = db->NewIterator(leveldb::ReadOptions());
   for (it->SeekToFirst(); it->Valid(); it->Next()) {
     std::cout << it->key().ToString() << std::endl;
+    count++;
+  }
+  std::cout << "Number of states: " << count << std::endl;
+  delete it;
+}
+
+void LevelDBISM::listSets() {
+  int count = 0;
+  leveldb::Iterator *it = db->NewIterator(leveldb::ReadOptions());
+  for (it->SeekToFirst(); it->Valid(); it->Next()) {
+    std::cout << it->key().ToString() << '\t';
+    InformationSet *is = decodeSet(it->value().ToString(), 0);
+    is->printAverageStrategy();
+    delete is;
     count++;
   }
   std::cout << "Number of states: " << count << std::endl;

@@ -9,7 +9,7 @@
 
 int main() {
   cfr::LevelDBISM ism("love.db");
-  ism.listKeys();
+  ism.listSets();
   while (true) {
     std::string id;
     std::cin >> id;
