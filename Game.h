@@ -15,6 +15,7 @@ public:
   virtual int currentPlayer() const = 0;
   virtual bool isTerminal() const = 0;
   virtual double utility() const = 0;
+  virtual std::string getStateId() const = 0;
   virtual std::string getInformationSetId() const = 0;
   virtual int numActions() const = 0;
 

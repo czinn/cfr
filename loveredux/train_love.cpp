@@ -19,7 +19,7 @@ void train(int iterations) {
       std::cout << i << std::endl;
     }
     LoveLetterGame *g = new LoveLetterGame(mt());
-    util += cfr(m, g, 1, 1);
+    util += dpcfr(m, g);
     delete g;
   }
 
@@ -32,5 +32,5 @@ void train(int iterations) {
 }
 
 int main() {
-  cfr::love::train(100000);
+  cfr::love::train(1000);
 }

@@ -28,6 +28,7 @@ public:
   virtual int currentPlayer() const override;
   virtual bool isTerminal() const override;
   virtual double utility() const override;
+  virtual std::string getStateId() const override;
   virtual std::string getInformationSetId() const override;
   virtual int numActions() const override;
 

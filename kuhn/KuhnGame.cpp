@@ -20,7 +20,7 @@ KuhnGame::KuhnGame(long seed) : Game(seed) {
 }
 
 KuhnGame::KuhnGame(const KuhnGame &game) : Game(game), history(game.history), current(game.current) {
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < CARDS; i++) {
     cards[i] = game.cards[i];
   }
 }
@@ -61,6 +61,10 @@ double KuhnGame::utility() const {
   }
   // shouldn't get here
   return 0;
+}
+
+std::string KuhnGame::getStateId() const {
+  return std::to_string(cards[0]) + std::to_string(cards[1]) + history;
 }
 
 std::string KuhnGame::getInformationSetId() const {

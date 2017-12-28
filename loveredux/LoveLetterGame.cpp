@@ -83,6 +83,23 @@ double LoveLetterGame::utility() const {
   return 0; // wow, a tie actually happened?
 }
 
+std::string LoveLetterGame::getStateId() const {
+  std::string s = "";
+  for (int i = top; i < CARDS; i++) {
+    s += (char)(cards[i] + '0');
+  }
+  s += (char)('A' + lastAction);
+  for (int i = 0; i < 2; i++) {
+    if (current == i) s += '.';
+    s += (char)('0' + hand[i]);
+    if (eliminated[i]) s += 'E';
+    if (known[i]) s += 'K';
+    s += (char)('A' + discardScore[i]);
+  }
+  if (handmaid) s += 'H';
+  return s;
+}
+
 std::string LoveLetterGame::getInformationSetId() const {
   std::string s = currentHand() + ';';
   s[0] += '0';
@@ -119,7 +136,6 @@ int LoveLetterGame::numActions() const {
 
 std::string LoveLetterGame::listActions() const {
   std::string h = currentHand();
-  assert(h.length() == 2);
   std::string actions = "";
   if (h.find(GUARD) != std::string::npos) {
     if (handmaid) {
